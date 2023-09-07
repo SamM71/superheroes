@@ -7,17 +7,17 @@ const Question = ({ randomPowerstat }) => {
     let questionText = '';
 
     if (randomPowerstat === 'intelligence') {
-      questionText = 'Who is the most intelligent?';
+      questionText = 'Who is more intelligent?';
     } else if (randomPowerstat === 'strength') {
-      questionText = 'Who is the strongest?';
+      questionText = 'Who is stronger?';
     } else if (randomPowerstat === 'speed') {
-      questionText = 'Who is the fastest?';
+      questionText = 'Who is faster?';
     } else if (randomPowerstat === 'durability') {
-      questionText = 'Who is the most durable?';
+      questionText = 'Who is more durable?';
     } else if (randomPowerstat === 'power') {
-      questionText = 'Who wields the most power?';
+      questionText = 'Who wields more power?';
     } else if (randomPowerstat === 'combat') {
-      questionText = 'Who has the highest combat ability?';
+      questionText = 'Who has higher combat ability?';
     }
 
     setQuestion(questionText);

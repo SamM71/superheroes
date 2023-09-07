@@ -1,54 +1,62 @@
-import React, { useEffect, useState } from 'react'
-import { HeroCards, Question, Score } from '../../components'
+import React, { useEffect, useState } from 'react';
+import { HeroCards, Question, Score } from '../../components';
 
 const Home = () => {
-  
+
   const powerstatsArray = ["intelligence", "strength", "speed", "durability", "power", "combat"];
   const [randomPowerstat, setRandomPowerstat] = useState('');
   const [score, setScore] = useState(0);
+  const [heroes, setHeroes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   const increaseScore = () => {
     setScore(prevScore => prevScore + 1);
+    fetchNewQuestionAndHeroes();
   };
 
   useEffect(() => {
-    const randomPowerstat = powerstatsArray[Math.floor(Math.random() * powerstatsArray.length)];
-    setRandomPowerstat(randomPowerstat);
+    fetchNewQuestionAndHeroes();
   }, []);
 
+  const fetchNewQuestionAndHeroes = async () => {
+    // Fetch new heroes
+    await fetchHeroes();
 
-
-  const [heroes, setHeroes] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
-
-  useEffect(() => {
-    fetchHeroes()
-  }, [])
+    // Generate a new random powerstat
+    const randomPowerstat = powerstatsArray[Math.floor(Math.random() * powerstatsArray.length)];
+    setRandomPowerstat(randomPowerstat);
+  };
 
   async function fetchHero() {
-    if (heroes.length < 2) {
-      const id = Math.floor(Math.random() * 732)
-      const response = await fetch(`https://www.superheroapi.com/api.php/2165233307012823/${id}`)
-      const data = await response.json()
-      // if (heroes.length < 2)
-      heroes.push(data)
-      // setHeroes(heroes)
+    const id = Math.floor(Math.random() * 732);
+    try {
+      const response = await fetch(`https://www.superheroapi.com/api.php/2165233307012823/${id}`);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      setError(error.message);
+      return null;
     }
   }
 
   async function fetchHeroes() {
     try {
-      await fetchHero()
-      await fetchHero()
-      console.log(heroes)
-      setLoading(false)
+      const newHeroes = [];
+      for (let i = 0; i < 2; i++) {
+        const hero = await fetchHero();
+        if (hero) {
+          newHeroes.push(hero);
+        }
+      }
+      setHeroes(newHeroes);
+      setLoading(false);
     } catch (error) {
-      setError(error.message)
+      setError(error.message);
     }
   }
 
-  const errorOrHeroes = error ? error : <HeroCards heroes={heroes} clickFn={increaseScore} />
+  const errorOrHeroes = error ? error : <HeroCards heroes={heroes} clickFn={increaseScore} />;
 
  
 
@@ -70,23 +78,21 @@ const Home = () => {
     }
   }
   
-  
-
 
   return (
     <>
       {/* <ClickContext.Provider value={increaseScore()}> */}
       <Question randomPowerstat={randomPowerstat} />
-        {
-          loading ? <p>Loading...</p> : errorOrHeroes
-        }
+      {
+        loading ? <p>Loading...</p> : errorOrHeroes
+      }
       {/* button to test score increasing functionality */}
       <button onClick = {() => increaseScore()}>Increase Score</button>
       
       <Score score={score} />
       {/* </ClickContext.Provider> */}
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

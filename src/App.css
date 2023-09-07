@@ -40,3 +40,18 @@
 .read-the-docs {
   color: #888;
 }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+}
+
+.grid-child {
+  border: 10px #61dafbaa;
+}
+
+.hero-img {
+  height: 250px;
+  width: 250px;
+}

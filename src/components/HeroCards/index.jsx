@@ -3,7 +3,7 @@ import { HeroCard } from '..'
 
 const HeroCards = ({ heroes }) => {
   return (
-    <div>
+    <div className='grid-container'>
       {
         heroes.map(hero => <HeroCard key={hero.id} hero={hero}/>)
       }

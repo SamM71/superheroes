@@ -64,24 +64,39 @@ const Home = () => {
   const errorOrHeroes = error ? error : <HeroCards heroes={heroes}  />;
 
   
- 
+  
 
   function compareStats(index) {
 
 
     if (heroes.length >= 2) {
-      const hero0 = heroes[0].powerstats[randomPowerstat];
-      const hero1 = heroes[1].powerstats[randomPowerstat];
+      let hero0 = heroes[0].powerstats[randomPowerstat];
+      let hero1 = heroes[1].powerstats[randomPowerstat];
+      if (hero0 == "null") { hero0 = 0}
+      if (hero1 == "null") { hero1 = 0}
   
       if (hero0 > hero1 && index == 0) {
         increaseScore()
+        console.log(`You picked hero${index}`)        
+        console.log("hero0", hero0)
+        console.log("hero1", hero1)
+        console.log(`correct! ${hero0} is higher than ${hero1}`)
       } else if (hero0 < hero1 && index == 1) {
         increaseScore()
+        console.log(`You picked hero${index}`)
+        console.log("hero0", hero0)
+        console.log("hero1", hero1)
+        console.log(`correct! ${hero1} is higher than ${hero0}`)
       } else if (hero0 == hero1) {
+        console.log(`You picked hero${index}`)
         console.log('Stats are equal');
         increaseScore()
       } else {
         decreaseScore()
+        console.log(`You picked hero${index}`)
+        console.log("hero0", hero0)
+        console.log("hero1", hero1)
+        console.log("WRONG")
       }
     } else {
       return 'Error: not enough heroes for comparison';
@@ -89,13 +104,12 @@ const Home = () => {
   }
   
   const buttons = heroes.length > 0 ? (
-    <>
-      <button onClick={() => compareStats(0)}>{heroes[0].name}</button>
-      {heroes.length > 1 && (
-        <button onClick={() => compareStats(1)}>{heroes[1].name}</button>
-      )}
-    </>
+    heroes.map((hero, index) => (
+      <button key={index} onClick={() => compareStats(index)}>{hero.name}</button>
+    ))
   ) : <p>No heroes available</p>;
+
+  
 
   return (
     <>

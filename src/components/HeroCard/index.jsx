@@ -1,8 +1,16 @@
 import React from 'react'
 
-const HeroCard = () => {
+const HeroCard = ({ hero }) => {
+  // get random hero
+  // contain stat
+  console.log(hero)
   return (
-    <div>HeroCard</div>
+    <div>
+      <div>
+        <img src={hero.image.url} alt={hero.name} />
+      </div>
+      <h2>{hero.name}</h2>
+    </div>
   )
 }
 

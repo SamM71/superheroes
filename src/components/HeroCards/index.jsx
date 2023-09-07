@@ -1,8 +1,14 @@
 import React from 'react'
+import { HeroCard } from '..'
 
-const HeroCards = () => {
+const HeroCards = ({ heroes }) => {
   return (
-    <div>HeroCards</div>
+    <div>
+      {
+        heroes.map(hero => <HeroCard key={hero.id} hero={hero}/>)
+      }
+
+    </div>
   )
 }
 

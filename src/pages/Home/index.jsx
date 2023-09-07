@@ -12,6 +12,7 @@ const Home = () => {
   }, []);
 
 
+<<<<<<< HEAD
   const increaseScore = () => {
     setScore(score + 1);
   };
@@ -21,6 +22,49 @@ const Home = () => {
       <Question randomPowerstat={randomPowerstat} increaseScore={increaseScore} />
       <HeroCards />
       <Score score={score} />
+=======
+    
+  const [heroes, setHeroes] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    fetchHeroes()
+  }, [])
+
+  async function fetchHero() {
+    if (heroes.length < 2) {
+      const id = Math.floor(Math.random() * 732)
+      const response = await fetch(`https://www.superheroapi.com/api.php/2165233307012823/${id}`)
+      const data = await response.json()
+      console.log(data)
+      // if (heroes.length < 2)
+      heroes.push(data)
+      // setHeroes(heroes)
+    }
+  }
+
+  async function fetchHeroes() {
+    try {
+      await fetchHero()
+      await fetchHero()
+      console.log(heroes)
+      setLoading(false)
+    } catch (error) {
+      setError(error.message)
+    }
+  }
+
+  const errorOrHeroes = error ? error : <HeroCards heroes={heroes} />
+
+  return (
+    <>
+      <Question randomPowerstat={randomPowerstat} />
+      {
+        loading ? <p>Loading...</p> : errorOrHeroes
+      }
+      <Score />
+>>>>>>> 098c2f394417f19f45dca6c566dd1b4e01b1a2e5
     </>
   );
 }

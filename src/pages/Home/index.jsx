@@ -1,14 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { HeroCards, Question, Score } from '../../components'
 
 const Home = () => {
 
   const powerstatsArray = ["intelligence", "strength", "speed", "durability", "power", "combat"];
+  const [randomPowerstat, setRandomPowerstat] = useState('');
 
-  // attribute, list of cards and that attribute
+    useEffect(() => {
+      const randomPowerstat = powerstatsArray[Math.floor(Math.random() * powerstatsArray.length)];
+      setRandomPowerstat(randomPowerstat);
+    }, []);
+
+
+    
   return (
     <>
-      <Question powerstatsArray={powerstatsArray} />
+      <Question randomPowerstat={randomPowerstat} />
       <HeroCards />
       <Score />
     </>

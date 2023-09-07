@@ -11,13 +11,13 @@ const Home = () => {
     setScore(prevScore => prevScore + 1);
   };
 
-    useEffect(() => {
-      const randomPowerstat = powerstatsArray[Math.floor(Math.random() * powerstatsArray.length)];
-      setRandomPowerstat(randomPowerstat);
-    }, []);
+  useEffect(() => {
+    const randomPowerstat = powerstatsArray[Math.floor(Math.random() * powerstatsArray.length)];
+    setRandomPowerstat(randomPowerstat);
+  }, []);
 
 
-    
+
   const [heroes, setHeroes] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -51,6 +51,29 @@ const Home = () => {
 
   const errorOrHeroes = error ? error : <HeroCards heroes={heroes} />
 
+ 
+
+  function compareStats(randomPowerstat) {
+    if (heroes.length >= 2) {
+      const hero1 = heroes[0].powerstats[randomPowerstat];
+      const hero2 = heroes[1].powerstats[randomPowerstat];
+  
+      if (hero1 > hero2) {
+        return true;
+      } else if (hero1 < hero2) {
+        return false;
+      } else {
+        console.log('Stats are equal');
+        return true;
+      }
+    } else {
+      return 'Error: not enough heroes for comparison';
+    }
+  }
+  
+  
+
+
   return (
     <>
       <Question randomPowerstat={randomPowerstat} />
@@ -59,6 +82,7 @@ const Home = () => {
       }
       {/* button to test score increasing functionality */}
       <button onClick = {() => increaseScore()}>Increase Score</button>
+      
       <Score score={score} />
     </>
   )

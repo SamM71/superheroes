@@ -1,8 +1,14 @@
 import React from 'react'
+import { HeroCards, Question, Score } from '../../components'
 
 const Home = () => {
+  // attribute, list of cards and that attribute
   return (
-    <div>Home</div>
+    <>
+      <Question />
+      <HeroCards />
+      <Score />
+    </>
   )
 }
 

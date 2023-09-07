@@ -5,7 +5,7 @@ const Question = ({ randomPowerstat }) => {
 
   useEffect(() => {
 
-    const questionText = `Which hero has higher ${randomPowerstat}?`;
+    const questionText = `Who has higher ${randomPowerstat}?`;
     setQuestion(questionText);
   }, [randomPowerstat]);
 

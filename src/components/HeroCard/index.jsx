@@ -3,8 +3,6 @@ import React from 'react'
 const HeroCard = ({ hero, clickFn }) => {
   // get random hero
   // contain stat
-  console.log(hero)
-  // const clicker = useContext(ClickContext)
   return (
     <div className="grid-child">
       <div>

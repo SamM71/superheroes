@@ -22,12 +22,15 @@ const Home = () => {
   }, [])
 
   async function fetchHero() {
-    const id = Math.floor(Math.random() * 732)
-    const response = await fetch(`https://www.superheroapi.com/api.php/2165233307012823/${id}`)
-    const data = await response.json()
-    console.log(data)
-    heroes.push(data)
-    // setHeroes(heroes)
+    if (heroes.length < 2) {
+      const id = Math.floor(Math.random() * 732)
+      const response = await fetch(`https://www.superheroapi.com/api.php/2165233307012823/${id}`)
+      const data = await response.json()
+      console.log(data)
+      // if (heroes.length < 2)
+      heroes.push(data)
+      // setHeroes(heroes)
+    }
   }
 
   async function fetchHeroes() {

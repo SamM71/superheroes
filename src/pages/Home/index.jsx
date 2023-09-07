@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { HeroCards, Question, Score } from '../../components';
 
 const Home = () => {
+
   const powerstatsArray = ["intelligence", "strength", "speed", "durability", "power", "combat"];
   const [randomPowerstat, setRandomPowerstat] = useState('');
   const [score, setScore] = useState(0);
@@ -55,7 +56,9 @@ const Home = () => {
     }
   }
 
-  const errorOrHeroes = error ? error : <HeroCards heroes={heroes} />;
+  const errorOrHeroes = error ? error : <HeroCards heroes={heroes} clickFn={increaseScore} />;
+
+ 
 
   function compareStats(randomPowerstat) {
     if (heroes.length >= 2) {
@@ -78,22 +81,16 @@ const Home = () => {
 
   return (
     <>
+      {/* <ClickContext.Provider value={increaseScore()}> */}
       <Question randomPowerstat={randomPowerstat} />
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>{error}</p>
-      ) : heroes.length > 0 ? (
-        <>
-          <p>{heroes[0].name}</p>
-          <HeroCards heroes={heroes} />
-        </>
-      ) : (
-        <p>No heroes available</p>
-      )}
-      {/* Button to test score increasing functionality */}
-      <button onClick={() => increaseScore()}>Increase Score</button>
+      {
+        loading ? <p>Loading...</p> : errorOrHeroes
+      }
+      {/* button to test score increasing functionality */}
+      <button onClick = {() => increaseScore()}>Increase Score</button>
+      
       <Score score={score} />
+      {/* </ClickContext.Provider> */}
     </>
   );
 };

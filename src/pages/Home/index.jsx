@@ -1,8 +1,18 @@
-import React, {useState, useEffect} from 'react'
+import React, { useEffect, useState } from 'react'
 import { HeroCards, Question, Score } from '../../components'
 
 const Home = () => {
-  // attribute, list of cards and that attribute
+
+  const powerstatsArray = ["intelligence", "strength", "speed", "durability", "power", "combat"];
+  const [randomPowerstat, setRandomPowerstat] = useState('');
+
+    useEffect(() => {
+      const randomPowerstat = powerstatsArray[Math.floor(Math.random() * powerstatsArray.length)];
+      setRandomPowerstat(randomPowerstat);
+    }, []);
+
+
+    
   const [heroes, setHeroes] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -35,7 +45,7 @@ const Home = () => {
 
   return (
     <>
-      <Question />
+      <Question randomPowerstat={randomPowerstat} />
       {
         loading ? <p>Loading...</p> : errorOrHeroes
       }

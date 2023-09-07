@@ -1,28 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { HeroCards, Question, Score } from '../../components';
+import React, { useEffect, useState } from 'react'
+import { HeroCards, Question, Score } from '../../components'
 
 const Home = () => {
+
   const powerstatsArray = ["intelligence", "strength", "speed", "durability", "power", "combat"];
   const [randomPowerstat, setRandomPowerstat] = useState('');
   const [score, setScore] = useState(0);
 
-  useEffect(() => {
-    const randomPowerstat = powerstatsArray[Math.floor(Math.random() * powerstatsArray.length)];
-    setRandomPowerstat(randomPowerstat);
-  }, []);
-
-
-<<<<<<< HEAD
   const increaseScore = () => {
-    setScore(score + 1);
+    setScore(prevScore => prevScore + 1);
   };
 
-  return (
-    <>
-      <Question randomPowerstat={randomPowerstat} increaseScore={increaseScore} />
-      <HeroCards />
-      <Score score={score} />
-=======
+    useEffect(() => {
+      const randomPowerstat = powerstatsArray[Math.floor(Math.random() * powerstatsArray.length)];
+      setRandomPowerstat(randomPowerstat);
+    }, []);
+
+
     
   const [heroes, setHeroes] = useState([])
   const [loading, setLoading] = useState(true)
@@ -63,10 +57,11 @@ const Home = () => {
       {
         loading ? <p>Loading...</p> : errorOrHeroes
       }
-      <Score />
->>>>>>> 098c2f394417f19f45dca6c566dd1b4e01b1a2e5
+      {/* button to test score increasing functionality */}
+      <button onClick = {() => increaseScore()}>Increase Score</button>
+      <Score score={score} />
     </>
-  );
+  )
 }
 
-export default Home;
+export default Home

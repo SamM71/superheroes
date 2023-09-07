@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { HeroCards, Question, Score } from '../../components'
 
 const Home = () => {
-
+  
   const powerstatsArray = ["intelligence", "strength", "speed", "durability", "power", "combat"];
   const [randomPowerstat, setRandomPowerstat] = useState('');
   const [score, setScore] = useState(0);
@@ -31,7 +31,6 @@ const Home = () => {
       const id = Math.floor(Math.random() * 732)
       const response = await fetch(`https://www.superheroapi.com/api.php/2165233307012823/${id}`)
       const data = await response.json()
-      console.log(data)
       // if (heroes.length < 2)
       heroes.push(data)
       // setHeroes(heroes)
@@ -49,17 +48,19 @@ const Home = () => {
     }
   }
 
-  const errorOrHeroes = error ? error : <HeroCards heroes={heroes} />
+  const errorOrHeroes = error ? error : <HeroCards heroes={heroes} clickFn={increaseScore} />
 
   return (
     <>
+      {/* <ClickContext.Provider value={increaseScore()}> */}
       <Question randomPowerstat={randomPowerstat} />
-      {
-        loading ? <p>Loading...</p> : errorOrHeroes
-      }
+        {
+          loading ? <p>Loading...</p> : errorOrHeroes
+        }
       {/* button to test score increasing functionality */}
       <button onClick = {() => increaseScore()}>Increase Score</button>
       <Score score={score} />
+      {/* </ClickContext.Provider> */}
     </>
   )
 }

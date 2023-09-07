@@ -15,6 +15,11 @@ const Home = () => {
     fetchNewQuestionAndHeroes();
   };
 
+  const decreaseScore = () => {
+    setScore(prevScore => prevScore - 1);
+    fetchNewQuestionAndHeroes();
+  };
+
   useEffect(() => {
     fetchNewQuestionAndHeroes();
   }, []);
@@ -56,28 +61,41 @@ const Home = () => {
     }
   }
 
-  const errorOrHeroes = error ? error : <HeroCards heroes={heroes} clickFn={increaseScore} />;
+  const errorOrHeroes = error ? error : <HeroCards heroes={heroes}  />;
 
+  
  
 
-  function compareStats(randomPowerstat) {
+  function compareStats(index) {
+
+
     if (heroes.length >= 2) {
-      const hero1 = heroes[0].powerstats[randomPowerstat];
-      const hero2 = heroes[1].powerstats[randomPowerstat];
+      const hero0 = heroes[0].powerstats[randomPowerstat];
+      const hero1 = heroes[1].powerstats[randomPowerstat];
   
-      if (hero1 > hero2) {
-        return true;
-      } else if (hero1 < hero2) {
-        return false;
-      } else {
+      if (hero0 > hero1 && index == 0) {
+        increaseScore()
+      } else if (hero0 < hero1 && index == 1) {
+        increaseScore()
+      } else if (hero0 == hero1) {
         console.log('Stats are equal');
-        return true;
+        increaseScore()
+      } else {
+        decreaseScore()
       }
     } else {
       return 'Error: not enough heroes for comparison';
     }
   }
   
+  const buttons = heroes.length > 0 ? (
+    <>
+      <button onClick={() => compareStats(0)}>{heroes[0].name}</button>
+      {heroes.length > 1 && (
+        <button onClick={() => compareStats(1)}>{heroes[1].name}</button>
+      )}
+    </>
+  ) : <p>No heroes available</p>;
 
   return (
     <>
@@ -86,9 +104,10 @@ const Home = () => {
       {
         loading ? <p>Loading...</p> : errorOrHeroes
       }
-      {/* button to test score increasing functionality */}
-      <button onClick = {() => increaseScore()}>Increase Score</button>
-      
+      {
+      loading ? <p>Loading...</p> : buttons
+      }
+
       <Score score={score} />
       {/* </ClickContext.Provider> */}
     </>
